@@ -52,12 +52,6 @@ def go(config: DictConfig):
                 },
             )
 
-        if "eda" in active_steps:
-            _ = mlflow.run(
-                os.path.join(root_path,"src/eda"),
-                "main"
-            )
-
         if "basic_cleaning" in active_steps:
             ##################
             # Implement here #
