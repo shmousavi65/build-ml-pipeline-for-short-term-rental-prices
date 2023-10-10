@@ -1,0 +1,31 @@
+name: data_split
+conda_env: conda.yml
+
+entry_points:
+  main:
+    parameters:
+
+      input:
+        description: Input data artifact to be split for train and test
+        type: string
+      
+      test_size:
+        description: Fraction of data for test size 
+        type: float
+
+      random_seed:
+        description: Random_seed for the splliting
+        type: float
+
+      stratify_by:
+        description: If provided, it is considered a column name to be used for stratified splitting
+        type: str
+        default: "null"
+
+    command: >-
+      python run.py \
+        --input {input} \
+        --test_size {test_size} \
+        --random_seed {random_seed} \
+        --stratify_by {stratify_by} 
+        
