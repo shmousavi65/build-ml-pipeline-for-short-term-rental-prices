@@ -22,7 +22,7 @@ def go(args):
 
     logger.info(f"splitting data into train and test")
     splits = {}
-    splits["train"], splits["test"] = train_test_split(
+    splits["trainval"], splits["test"] = train_test_split(
         data_df,
         test_size=args.test_size,
         random_state=args.random_seed,

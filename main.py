@@ -58,7 +58,7 @@ def go(config: DictConfig):
                 "main",
                 parameters={
                     "input_artifact": "sample.csv:latest",
-                    "output_artifact": "clean_sample.csv",
+                    "output_artifact": "clean_data.csv",
                     "output_type": "raw_data",
                     "output_description": "cleaned input data",
                     "min_price": config['etl']['min_price'],
@@ -71,8 +71,8 @@ def go(config: DictConfig):
                 os.path.join(root_path,"src/data_check"),
                 "main",
                 parameters={
-                    "csv": "clean_sample.csv:latest",
-                    "ref": "clean_sample.csv:reference",
+                    "csv": "clean_data.csv:latest",
+                    "ref": "clean_data.csv:reference",
                     "kl_threshold": config['data_check']['kl_threshold'], 
                     "min_price": config['etl']['min_price'],
                     "max_price": config['etl']['max_price'],
@@ -114,13 +114,13 @@ def go(config: DictConfig):
                 os.path.join(root_path,"src/train_random_forest"),
                 "main",
                 parameters={
-                    "trainval_artifact": "data_train.csv:latest",
+                    "trainval_artifact": "data_trainval.csv:latest",
                     "val_size":config['modeling']['val_size'],
                     "random_seed":config['modeling']['random_seed'],
                     "stratify_by": config['modeling']['stratify_by'],
                     "rf_config": rf_config,
                     "max_tfidf_features":config['modeling']['max_tfidf_features'],
-                    "output_artifact": "random_forest_model"
+                    "output_artifact": "model_export"
                 },
             )
 
@@ -129,8 +129,8 @@ def go(config: DictConfig):
                 os.path.join(root_path,"src/test_regression_model"),
                 "main",
                 parameters={
-                    "model_artifact": "random_forest_model:prod",
-                    "test_data":"data_train.csv:latest",
+                    "model_artifact": "model_export:prod",
+                    "test_data":"data_test.csv:latest",
                 },
             )
 

@@ -3,6 +3,7 @@ import argparse
 import logging
 import wandb
 import mlflow
+from sklearn.metrics import mean_absolute_error
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
@@ -23,10 +24,14 @@ def go(args):
     X_test = df.copy()
     y_test = X_test.pop("price")
 
+    y_pred = pipe.predict(X_test)
+    mae = mean_absolute_error(y_test, y_pred)
+
     logger.info("Scoring")
     r_squared = pipe.score(X_test, y_test)
 
     run.summary['r2'] = r_squared
+    run.summary['mae'] = mae
 
 if __name__ == "__main__":
 
