@@ -96,7 +96,7 @@ def go(config: DictConfig):
                 os.path.join(root_path,"src/data_split"),
                 "main",
                 parameters={
-                    "input": "clean_sample.csv:latest",
+                    "input": "clean_data.csv:latest",
                     "test_size": config['modeling']['test_size'],
                     "random_seed": config['modeling']['random_seed'],
                     "stratify_by": config['modeling']['stratify_by']
