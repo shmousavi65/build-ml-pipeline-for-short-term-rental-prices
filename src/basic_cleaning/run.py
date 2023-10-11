@@ -17,9 +17,15 @@ def go(args):
 
     data_df = pd.read_csv(input_data_path)
 
-    logger.info(f"dropping price outliers between out of  min {args.min_price} and max {args.max_price} ")
+    logger.info(f"dropping price outliers out of  min {args.min_price} and max {args.max_price} ")
     idx = data_df['price'].between(args.min_price, args.max_price)
     data_df = data_df[idx].copy()
+
+    logger.info(f"dropping longtitude outliers out of  min {-74.25} and max {-73.50} ")
+    logger.info(f"dropping latitude outliers out of  min {40.5} and max {41.2} ")
+    idx = data_df['longitude'].between(-74.25, -73.50) & data_df['latitude'].between(40.5, 41.2)
+    data_df = data_df[idx].copy()
+
 
     file_name = "clean_sample.csv"
     data_df.to_csv(file_name, index=False)
